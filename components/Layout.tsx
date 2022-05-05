@@ -1,14 +1,17 @@
-import { useEffect, ReactNode } from 'react'
+import { useEffect, useState, ReactNode } from 'react'
 import { useRouter } from 'next/router'
 import Nav from './Nav'
 import { useUserStore } from '../libs/store'
 import { useApi } from '../libs/api'
+import { section as sectionStyle, main as mainStyle } from './Layout.css'
 
 interface Props {
   children: ReactNode
 }
 
 const Layout = ({ children }: Props) => {
+  const [initialized, setInitialized] = useState(false)
+
   const { user } = useUserStore()
   const router = useRouter()
   const api = useApi()
@@ -25,12 +28,14 @@ const Layout = ({ children }: Props) => {
         }
       })
     }
+
+    setInitialized(true)
   }, [])
 
   return (
-    <main>
-      {user && <Nav />}
-      {children}
+    <main className={mainStyle}>
+      {initialized && user && <Nav />}
+      {initialized && <section className={sectionStyle}>{children}</section>}
     </main>
   )
 }

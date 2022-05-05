@@ -1,4 +1,4 @@
-import { useState, SyntheticEvent } from 'react'
+import { useState } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useApi } from '../libs/api'
@@ -7,6 +7,7 @@ import Card from '../components/Card'
 import EmailInput from '../components/EmailInput'
 import PasswordInput from '../components/PasswordInput'
 import Submit from '../components/Submit'
+import Form from '../components/Form'
 
 const Login: NextPage = () => {
   const [email, setEmail] = useState('')
@@ -15,21 +16,18 @@ const Login: NextPage = () => {
   const api = useApi()
   const router = useRouter()
 
-  const submit = (event: SyntheticEvent) => {
-    event.preventDefault()
-
+  const submit = () =>
     api
       .post('/auth', { email, password })
       .then(() => router.push('/'))
       .catch((error: any) => {
         console.error(error)
       })
-  }
 
   return (
     <Layout>
       <Card>
-        <form onSubmit={submit}>
+        <Form onSubmit={submit}>
           <EmailInput label="Email" value={email} onChange={setEmail} />
           <PasswordInput
             label="Mot de passe"
@@ -37,7 +35,7 @@ const Login: NextPage = () => {
             onChange={setPassword}
           />
           <Submit label="Se connecter" />
-        </form>
+        </Form>
       </Card>
     </Layout>
   )

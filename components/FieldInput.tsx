@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { label as labelStyle, input as inputStyle } from './FieldInput.css'
 
 interface Props {
   type: 'text' | 'email' | 'password' | 'number'
@@ -8,9 +9,10 @@ interface Props {
 }
 
 const FieldInput = ({ type, value, onChange, children }: Props) => (
-  <label>
+  <label className={labelStyle}>
     {children}
     <input
+      className={inputStyle}
       type={type}
       value={value}
       onChange={(event) => onChange(event.target.value)}

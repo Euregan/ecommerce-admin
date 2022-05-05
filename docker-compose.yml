@@ -31,3 +31,5 @@ services:
     ports:
       - 5555:5555
     command: npx prisma studio
+    environment:
+      DATABASE_URL: postgresql://admin:password@db:5432/ecommerce
